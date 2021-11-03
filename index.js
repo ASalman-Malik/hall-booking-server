@@ -41,10 +41,23 @@ app.post("/book-room", async(request, response) => {
 });
 
 app.get("/list-all-booked-room", async(request, response) => {
+    const bookedRoom = request.query.body;
+    const client = await  createDBConnection();
+    const result = await client.db("hall-booking")
+    .collection("room")
+    .find({bookingstatus : bookedRoom});
+    // .find({"booking-status": {$ne: false}});
+    response.send(result);
 
-});
+
+})
 
 app.get("/list-all-customers-data", async(request, response) => {
+    const client = await createDBConnection();
+    const result = await client.db("hall-booking")
+    .collection("room")
+    .find({});
+    response.send(result); 
 
 });
 
